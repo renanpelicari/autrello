@@ -26,9 +26,7 @@ if [ -f  "$PROP_FILE" ]; then
     # get trello token
     TOKEN=`getProperty "trello.token"`
 
-    echo "KEY:   $KEY"
-    echo "TOKEN: $TOKEN"
-
+    ./src/run.sh "$KEY" "$TOKEN"
 else
   echo "The properties file [$PROP_FILE] not exists"
 
