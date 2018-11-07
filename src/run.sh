@@ -1,15 +1,25 @@
 #!/bin/bash
+#######################################################
+# Main script to show menu and orchestrate trello api requests
+#######################################################
 
-KEY=$1
-TOKEN=$2
+clear
+echo "#######################################################"
+echo "AuTrello"
+echo "  - use trello by Linux command line o/"
+echo "#######################################################"
+echo ""
 
-echo "KEY:   $KEY"
-echo "TOKEN: $TOKEN"
+if [ "$DEBUG_MODE" == "true" ]; then
+    echo "----------- debug --------------"
+    echo "FILE:     run.sh"
+    echo "KEY:      $KEY"
+    echo "TOKEN:    $TOKEN"
+    echo "--------------------------------"
+    echo ""
+fi
 
-getBoards() {
-    curl "https://api.trello.com/1/members/me/boards?key=$KEY&token=$TOKEN"
-}
+./src/client/trello_client.sh
 
-getBoards
 echo ""
 

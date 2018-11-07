@@ -20,13 +20,17 @@ getProperty() {
 # check if properties file exists
 if [ -f  "$PROP_FILE" ]; then
 
-    # get trello key
+    # get trello key and token
     KEY=`getProperty "trello.key"`
-
-    # get trello token
     TOKEN=`getProperty "trello.token"`
+    DEBUG_MODE=`getProperty "debug.mode"`
 
-    ./src/run.sh "$KEY" "$TOKEN"
+    # export token and key to use in any context of script (like global const)
+    export KEY
+    export TOKEN
+    export DEBUG_MODE
+
+    ./src/run.sh
 else
   echo "The properties file [$PROP_FILE] not exists"
 
