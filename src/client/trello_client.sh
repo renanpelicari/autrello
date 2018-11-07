@@ -20,21 +20,8 @@ getUri() {
 }
 
 doRequest() {
-    if [ "$DEBUG_MODE" == "true" ]; then
-        echo "----------- debug --------------"
-        echo "performing http(s) request"
-        echo "FILE:     trello_client.sh"
-        echo "FUNC:     doRequest()"
-        echo "COMMAND:"
-        echo "curl $1"
-        echo "--------------------------------"
-        echo ""
-    fi
-
     BODY_RESPONSE="$(curl --silent $1)"  
-    echo "Body response:"
     echo "$BODY_RESPONSE"
-    echo ""
 }
 
 doGet() {
@@ -46,5 +33,19 @@ getBoards() {
     doGet "$URI_BOARDS"
 }
 
-getBoards
+case "$1" in
+    get_boards)
+        getBoards
+        ;;
+    post_card)
+        BOARD_ID="$2"
+        CARD_DESCRIPTION="$3"
+        echo "BoardId: $BOARD_ID / $CARD_DESCRIPTION"
+        echo "Need to be implemented"
+        ;;
+    *)
+        echo $"Usage: $0 {get_boards|post_card}"
+            exit 1
+esac
+
 echo ""
