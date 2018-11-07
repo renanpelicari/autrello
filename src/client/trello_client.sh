@@ -10,6 +10,8 @@
 API_URL="https://api.trello.com/1"
 CONTEXT_USER_BOARDS="$API_URL/members/me/boards"
 
+FORMATTER_BOARDS='["BOARD_ID                 ","BOARD_NAME"], ["-------------------------","--------------------"], (.[] | [.id, .name]) | @tsv'
+
 getUri() {
     URI="$1?key=$KEY&token=$TOKEN"
     echo "$2"
@@ -28,9 +30,18 @@ doGet() {
     doRequest "$1"
 }
 
+# getFormattedResponse() {
+#     FORMATTED_RESP=`echo $1 | \'$2\'`
+#     echo $FORMATTED_RESP
+# }
+
 getBoards() {
+    clear
+    echo "ALL BOARDS:"
+    echo "===================================================="
     URI_BOARDS=`getUri "$CONTEXT_USER_BOARDS"`
-    doGet "$URI_BOARDS"
+    RESPONSE=`doGet "$URI_BOARDS"`
+    echo $RESPONSE | jq -r '["BOARD_ID                 ","BOARD_NAME"], ["-------------------------","--------------------"], (.[] | [.id, .name]) | @tsv'
 }
 
 case "$1" in
